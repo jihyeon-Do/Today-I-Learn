@@ -1,4 +1,5 @@
 # Enum
+- 특정 값들의 집합을 의미하는 자료형
 
 ## 1. 숫자형 열거
  
@@ -58,19 +59,38 @@ console.log(Order['1']) // First
 - 컴파일 후 제거되기 때문에 Javacsript 코드를 생성하지 않는다.
 
 ## 6. 열거형 활용 
+이넘이 런타임 시점에서는 실제 객체지만 keyof 를 사용할 때 주의해야합니다.
+일반적으로 keyof를 사용해야 되는 상황에서는 keyof typeof 를 사용하세요.
 
 ```typescript
 enum Language {
     TypeScript = 'TS',
     JavaScript = 'JS',
-    Java = 'JAVA',
+    Java = 'JAVA',   
     Ruby = "RB",
 }
 
 type Lang = 'TS' | 'JS'
+// keyof typeof
 type LangCode = keyof typeof Language;
-
+// keyof 는 자바스크립트에 존재하지 않는 연산자 입니다.
+// keyof 연산자는 타입의 키 값들을 유니온 타입으로 반환해줍니다.
+// keyof 연산자는 객체 타입에 사용할 수 있습니다.
 function getLang(langCode:string){
     console.log(langCode)
 }
+```
+## 7. 런타임 시점에서의 이넘
+이넘은 런타임시에 실제 객체 형태로 존재합니다.
+```typescript
+enum E {
+    X, Y, Z
+}
+
+function getX(obj:{X:number}) {
+    return obj.X;
+}
+
+getX(E); // 이넘 E의 X는 숫자이기 때문에 정상 동작
+// 왜냐! 값을 주지 않으면 0부터 차례로 1씩 증가하기 때문이다!
 ```
