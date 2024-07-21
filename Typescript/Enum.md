@@ -1,6 +1,7 @@
 # Enum
 
 - 특정 값들의 집합을 의미하는 자료형
+- 접근 방식은 일반 객체와 같다.
 
 ## 1. 숫자형 열거
 
@@ -33,6 +34,7 @@ console.log(Prize.Gold); // 값으로 사용할 수 있다.
 ## 2. 문자형 열거
 
 - 숫자형과는 다르게 이넘 값 전부 다 특정 문자 또는 다른 이넘 값으로 초기화 해줘야 한다.
+  - 리버스 매핑의 차이점도 존재
 - 자동으로 증가되지 않는다.
 
 ## 3. 혼합형 열거
@@ -42,9 +44,11 @@ console.log(Prize.Gold); // 값으로 사용할 수 있다.
 ## 4. 리버스 열거
 
 - 숫자형 열거에서 역방향 값 찾기가 가능하다.
+  - 문자형에서는 지원하지 않음
 
 ```typescript
 enum Order {
+  // name = value
   First = 1,
   Second = 2,
   Third = 3,
@@ -62,7 +66,6 @@ console.log(Order);
 */
 
 console.log(Order.First); // 1
-
 console.log(Order["1"]); // First
 ```
 
@@ -97,7 +100,7 @@ function getLang(langCode: string) {
 
 ## 7. 런타임 시점에서의 이넘
 
-이넘은 런타임시에 실제 객체 형태로 존재합니다.
+**이넘은 런타임시에 실제 객체 형태로 존재합니다.**
 
 ```typescript
 enum E {
@@ -112,4 +115,14 @@ function getX(obj: { X: number }) {
 
 getX(E); // 이넘 E의 X는 숫자이기 때문에 정상 동작
 // 왜냐! 값을 주지 않으면 0부터 차례로 1씩 증가하기 때문이다!
+
+enum Fruits {
+  Peach = "Peach",
+  Apple = "Apple",
+  Orange = "Orange",
+}
+
+type FruitCode = keyof typeof Fruits;
+// 위 아래 같음
+// type FruitCode = 'Peach' | 'Apple' | 'Orange'
 ```
